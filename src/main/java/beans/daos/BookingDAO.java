@@ -1,17 +1,14 @@
 package beans.daos;
 
+import java.util.List;
+import java.util.Objects;
+
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
 
-import java.util.List;
-import java.util.Objects;
-
 /**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/4/2016
- * Time: 10:21 AM
+ * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/4/2016 Time: 10:21 AM
  */
 public interface BookingDAO {
 
@@ -40,5 +37,10 @@ public interface BookingDAO {
         if (Objects.isNull(ticket)) {
             throw new NullPointerException("Ticket is [null]");
         }
+    }
+
+
+    default Ticket getTicketById(Long id) {
+        return getAllTickets().stream().filter(ticket -> ticket.getId() == id).findFirst().get();
     }
 }

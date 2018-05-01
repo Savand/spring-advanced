@@ -1,21 +1,19 @@
 package beans.daos.db;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
 import beans.daos.AbstractDAO;
 import beans.daos.BookingDAO;
 import beans.models.Booking;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
-import org.hibernate.Query;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 9:00 PM
+ * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 20/2/16 Time: 9:00 PM
  */
 @Repository("bookingDAO")
 public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
@@ -34,8 +32,7 @@ public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
 
     @Override
     public void delete(User user, Ticket ticket) {
-        Query query = getCurrentSession().createQuery(
-                "delete from Booking b where b.user = :user and b.ticket = :ticket");
+        Query query = getCurrentSession().createQuery("delete from Booking b where b.user = :user and b.ticket = :ticket");
         query.setParameter("user", user);
         query.setParameter("ticket", ticket);
         query.executeUpdate();
@@ -71,4 +68,5 @@ public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
         Query query = getCurrentSession().createQuery("select b.ticket from Booking b");
         return ((List<Ticket>) query.list());
     }
+
 }

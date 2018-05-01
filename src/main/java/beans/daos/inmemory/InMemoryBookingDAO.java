@@ -1,19 +1,24 @@
 package beans.daos.inmemory;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Repository;
+
 import beans.daos.BookingDAO;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
-import org.springframework.stereotype.Repository;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/4/2016
- * Time: 10:59 AM
+ * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/4/2016 Time: 10:59 AM
  */
 @Repository("inMemoryBookingDAO")
 public class InMemoryBookingDAO implements BookingDAO {
@@ -43,8 +48,7 @@ public class InMemoryBookingDAO implements BookingDAO {
         if (Objects.isNull(event)) {
             throw new NullPointerException("Event is [null]");
         }
-        return db.values().stream().flatMap(Collection:: stream).filter(ticket -> Objects.equals(ticket.getEvent(), event))
-                 .collect(Collectors.toList());
+        return db.values().stream().flatMap(Collection::stream).filter(ticket -> Objects.equals(ticket.getEvent(), event)).collect(Collectors.toList());
     }
 
     @Override
@@ -60,6 +64,7 @@ public class InMemoryBookingDAO implements BookingDAO {
 
     @Override
     public List<Ticket> getAllTickets() {
-        return db.values().stream().flatMap(Collection:: stream).collect(Collectors.toList());
+        return db.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
+
 }
