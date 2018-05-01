@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import beans.daos.UserDAO;
-import beans.models.Ticket;
 import beans.models.User;
 
 /**
@@ -28,7 +27,8 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         return userDAO.create(user);
     }
-
+    
+    @Override
     public void remove(User user) {
         userDAO.delete(user);
     }
@@ -40,13 +40,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userDAO.getByEmail(email);
     }
-
+    
+    @Override
     public List<User> getUsersByName(String name) {
         return userDAO.getAllByName(name);
-    }
-
-    public List<Ticket> getBookedTickets() {
-        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override

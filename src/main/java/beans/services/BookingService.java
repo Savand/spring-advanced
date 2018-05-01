@@ -18,4 +18,6 @@ public interface BookingService {
     List<Ticket> getTicketsForEvent(String event, String auditorium, LocalDateTime date);
 
     Ticket getTicketById(Long ticketId);
+    
+    List<Ticket> getTickets(User user);
 }

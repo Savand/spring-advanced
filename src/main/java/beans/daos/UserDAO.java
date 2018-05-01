@@ -36,4 +36,5 @@ public interface UserDAO {
             throw new NullPointerException("User's name is [null]. User: [" + user + "]");
         }
     }
+
 }

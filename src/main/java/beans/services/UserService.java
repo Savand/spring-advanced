@@ -2,7 +2,6 @@ package beans.services;
 
 import java.util.List;
 
-import beans.models.Ticket;
 import beans.models.User;
 
 /**
@@ -21,6 +20,4 @@ public interface UserService {
     User getUserByEmail(String email);
 
     List<User> getUsersByName(String name);
-
-    List<Ticket> getBookedTickets();
 }

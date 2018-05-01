@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -29,32 +30,27 @@ import beans.services.UserService;
 
 
 @Component
-public class SystemInitializer implements ServletContextListener {
-
-    @Autowired
-    private AuditoriumService auditoriumService;
-
-    @Autowired
+public class DatabaseInitializer {
+	private AuditoriumService auditoriumService;
     private BookingService bookingService;
-
-    @Autowired
     private EventService eventService;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private DiscountService discountService;
+    
+	@Autowired
+	public DatabaseInitializer(AuditoriumService auditoriumService, BookingService bookingService,
+			EventService eventService, UserService userService, DiscountService discountService) {
+		super();
+		this.auditoriumService = auditoriumService;
+		this.bookingService = bookingService;
+		this.eventService = eventService;
+		this.userService = userService;
+		this.discountService = discountService;
+	}
 
 
-
-    @Override
-    public void contextDestroyed(ServletContextEvent arg0) {
-        // do nothing
-    }
-
-    @Override
-    public void contextInitialized(ServletContextEvent arg0) {
+	@PostConstruct
+    public void poppulateDB() {
         String email = "dmitriy.vbabichev@gmail.com";
         String name = "Dmytro Babichev";
         String eventName = "The revenant";

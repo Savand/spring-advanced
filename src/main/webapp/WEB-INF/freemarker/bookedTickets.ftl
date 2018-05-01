@@ -11,7 +11,7 @@
 	  	</tr>
 	  <#list bookedTickets as ticket>
 	    <tr>
-	    	<td>${ticket.event}</td>
+	    	<td>${ticket.event.name}</td>
 	    	<td>${ticket.dateTime}</td>
 	        <td>${ticket.price}</td>
 	        <td>${ticket.seats}</td>

@@ -1,6 +1,7 @@
 package beans.controllers;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class BookingController {
     }
 
     @RequestMapping("/bookticket")
-    public String bookTicket(long userId, long ticketId, ModelMap model) {
+    public String bookTicket(Long userId, Long ticketId, ModelMap model) {
 
         Ticket bookTicket = bookingService.bookTicket(getUser(userId), bookingService.getTicketById(ticketId));
         model.addAttribute("bookTicket", bookTicket);
@@ -53,6 +54,26 @@ public class BookingController {
         model.addAttribute("ticketsForEvent", ticketsForEvent);
 
         return "ticketsForEvent";
+    }
+    
+    @RequestMapping("/ticketsforuser")
+    public String getTicketsForUser(@RequestParam Long userId, ModelMap model) {
+
+        List<Ticket> bookedTickets = bookingService.getTickets(getUser(userId));
+        model.addAttribute("bookedTickets", bookedTickets);
+        model.addAttribute("time", LocalTime.now());
+
+        return "bookedTickets";
+    }
+    
+    @RequestMapping(value="/download/ticketsforuser", headers="Accept=application/pdf", produces = "application/pdf")
+    public String downloadPdfTicketsForUser(@RequestParam Long userId, ModelMap model) {
+
+        List<Ticket> bookedTickets = bookingService.getTickets(getUser(userId));
+        model.addAttribute("bookedTickets", bookedTickets);
+        model.addAttribute("time", LocalTime.now());
+
+        return "bookedTickets";
     }
 
 
