@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import beans.models.Ticket;
 import beans.models.User;
@@ -27,6 +28,7 @@ public class BookingController {
     @Autowired
     private UserService userService;
 
+    // example for test endpoint http://localhost:8080/spring-course/booking/ticketsprice?event=The%20revenant&auditorium=Yellow%20hall&dateTime=2016-02-05T21:18&seats=1&seats=2&userId=1
     @RequestMapping("/ticketsprice")
     public String getTicketPrice(@RequestParam String event, @RequestParam String auditorium,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, @RequestParam List<Integer> seats,
@@ -38,8 +40,9 @@ public class BookingController {
         return "ticketsPrice";
     }
 
+    // example for test endpoint http://localhost:8080/spring-course/booking/bookticket?userId=1&ticketId=2
     @RequestMapping("/bookticket")
-    public String bookTicket(Long userId, Long ticketId, ModelMap model) {
+    public String bookTicket(@RequestParam Long userId, @RequestParam Long ticketId, ModelMap model) {
 
         Ticket bookTicket = bookingService.bookTicket(getUser(userId), bookingService.getTicketById(ticketId));
         model.addAttribute("bookTicket", bookTicket);
@@ -47,15 +50,7 @@ public class BookingController {
         return "bookTicket";
     }
 
-    @RequestMapping("/ticketsforevent")
-    public String getTicketsForEvent(@RequestParam String event, @RequestParam String auditorium, @RequestParam LocalDateTime date, ModelMap model) {
-
-        List<Ticket> ticketsForEvent = bookingService.getTicketsForEvent(event, auditorium, date);
-        model.addAttribute("ticketsForEvent", ticketsForEvent);
-
-        return "ticketsForEvent";
-    }
-    
+    // example for test endpoint http://localhost:8080/spring-course/booking/ticketsforuser?userId=1
     @RequestMapping("/ticketsforuser")
     public String getTicketsForUser(@RequestParam Long userId, ModelMap model) {
 
@@ -65,15 +60,14 @@ public class BookingController {
 
         return "bookedTickets";
     }
-    
-    @RequestMapping(value="/download/ticketsforuser", headers="Accept=application/pdf", produces = "application/pdf")
-    public String downloadPdfTicketsForUser(@RequestParam Long userId, ModelMap model) {
+
+    // example for test endpoint http://localhost:8080/spring-course/booking/pdf/ticketsforuser?userId=1
+    @RequestMapping(value = "/pdf/ticketsforuser", produces = "application/pdf")
+    public ModelAndView downloadPdfTicketsForUser(@RequestParam Long userId) {
 
         List<Ticket> bookedTickets = bookingService.getTickets(getUser(userId));
-        model.addAttribute("bookedTickets", bookedTickets);
-        model.addAttribute("time", LocalTime.now());
 
-        return "bookedTickets";
+        return new ModelAndView("pdf", "bookedTickets", bookedTickets);
     }
 
 

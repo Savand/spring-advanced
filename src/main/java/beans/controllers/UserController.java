@@ -17,9 +17,9 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    // check endpoint http://localhost:8080/spring-course/users
     @RequestMapping("/users")
     public String getAuditoriums(ModelMap model) {
-
         List<User> users = service.getAll();
 
         model.addAttribute("time", LocalTime.now());

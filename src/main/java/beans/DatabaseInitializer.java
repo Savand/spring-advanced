@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,25 +29,25 @@ import beans.services.UserService;
 
 @Component
 public class DatabaseInitializer {
-	private AuditoriumService auditoriumService;
+    private AuditoriumService auditoriumService;
     private BookingService bookingService;
     private EventService eventService;
     private UserService userService;
     private DiscountService discountService;
-    
-	@Autowired
-	public DatabaseInitializer(AuditoriumService auditoriumService, BookingService bookingService,
-			EventService eventService, UserService userService, DiscountService discountService) {
-		super();
-		this.auditoriumService = auditoriumService;
-		this.bookingService = bookingService;
-		this.eventService = eventService;
-		this.userService = userService;
-		this.discountService = discountService;
-	}
+
+    @Autowired
+    public DatabaseInitializer(AuditoriumService auditoriumService, BookingService bookingService, EventService eventService, UserService userService,
+            DiscountService discountService) {
+        super();
+        this.auditoriumService = auditoriumService;
+        this.bookingService = bookingService;
+        this.eventService = eventService;
+        this.userService = userService;
+        this.discountService = discountService;
+    }
 
 
-	@PostConstruct
+    @PostConstruct
     public void poppulateDB() {
         String email = "dmitriy.vbabichev@gmail.com";
         String name = "Dmytro Babichev";

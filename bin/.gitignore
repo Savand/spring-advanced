@@ -1,7 +1,0 @@
-*.iml
-.idea
-/.settings/
-/target/
-.*
-!.gitignore
-/bin/

@@ -8,24 +8,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import beans.models.Auditorium;
-import beans.services.AuditoriumService;
+import beans.models.Event;
+import beans.services.EventService;
 
 @Controller
-public class AuditoriumController {
+public class EventController {
 
     @Autowired
-    private AuditoriumService service;
+    private EventService service;
 
-    // check endpoint http://localhost:8080/spring-course/auditoriums
-    @RequestMapping("/auditoriums")
+    // check endpoint http://localhost:8080/spring-course/events
+    @RequestMapping("/events")
     public String getAuditoriums(ModelMap model) {
+        List<Event> events = service.getAll();
 
-        List<Auditorium> auditoriumList = service.getAuditoriums();
         model.addAttribute("time", LocalTime.now());
-        model.addAttribute("auditoriums", auditoriumList);
+        model.addAttribute("events", events);
 
-        return "auditoriums";
+        return "events";
     }
-
 }
