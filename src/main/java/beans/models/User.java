@@ -2,21 +2,23 @@ package beans.models;
 
 import java.time.LocalDate;
 
+import org.h2.util.StringUtils;
+
+import util.RoleUtil;
+
 /**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/1/2016
- * Time: 7:35 PM
+ * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/1/2016 Time: 7:35 PM
  */
 public class User {
 
-    private long      id;
-    private String    email;
-    private String    name;
+    private long id;
+    private String email;
+    private String name;
     private LocalDate birthday;
+    private String roles = "";
+    private String password;
 
-    public User() {
-    }
+    public User() {}
 
     public User(long id, String email, String name, LocalDate birthday) {
         this.id = id;
@@ -27,6 +29,11 @@ public class User {
 
     public User(String email, String name, LocalDate birthday) {
         this(-1, email, name, birthday);
+    }
+
+    public User(String email, String name, LocalDate birthday, String password) {
+        this(email, name, birthday);
+        this.password = password;
     }
 
     public User withId(long id) {
@@ -65,6 +72,31 @@ public class User {
         this.birthday = birthday;
     }
 
+    public String getRoles() {
+        return roles;
+    }
+
+    public void addRole(Role role) {
+
+        if (StringUtils.isNullOrEmpty(this.roles)) {
+            this.setRoles(role.toString());
+        } else {
+            this.setRoles(this.roles + RoleUtil.ROLES_RELIMITER + role.toString());
+        }
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -95,11 +127,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-               "id=" + id +
-               ", email='" + email + '\'' +
-               ", name='" + name + '\'' +
-               ", birthday=" + birthday +
-               '}';
+        return "User{" + "id=" + id + ", email='" + email + '\'' + ", name='" + name + '\'' + ", birthday=" + birthday + ", roles: " + getRoles() + '}';
     }
 }

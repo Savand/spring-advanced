@@ -18,6 +18,7 @@ import beans.aspects.LuckyWinnerAspect;
 import beans.models.Auditorium;
 import beans.models.Event;
 import beans.models.Rate;
+import beans.models.Role;
 import beans.models.Ticket;
 import beans.models.User;
 import beans.services.AuditoriumService;
@@ -38,7 +39,6 @@ public class DatabaseInitializer {
     @Autowired
     public DatabaseInitializer(AuditoriumService auditoriumService, BookingService bookingService, EventService eventService, UserService userService,
             DiscountService discountService) {
-        super();
         this.auditoriumService = auditoriumService;
         this.bookingService = bookingService;
         this.eventService = eventService;
@@ -58,8 +58,17 @@ public class DatabaseInitializer {
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 
-        userService.register(new User(email, name, LocalDate.now()));
-        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29)));
+        userService.register(new User(email, name, LocalDate.now(), "password1"));
+        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), "password2"));
+
+        String managerMail = "savand@gmail.com";
+        User bookingManager = new User(managerMail, "Andrii Savka", LocalDate.of(1986, 4, 29), "password");
+        bookingManager.addRole(Role.BOOKING_MANAGER);
+        userService.register(bookingManager);
+        User managerByMail = userService.getUserByEmail(managerMail);
+
+        System.out.println("User with email: [savand@gmail.com] is " + managerByMail);
+        System.out.println();
 
         User userByEmail = userService.getUserByEmail(email);
         System.out.println("User with email: [" + email + "] is " + userByEmail);
@@ -68,6 +77,7 @@ public class DatabaseInitializer {
         System.out.println("All users with name: [" + name + "] are: ");
         userService.getUsersByName(name).forEach(System.out::println);
         System.out.println();
+
 
         Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(9, 0, 0)), blueHall));
         System.out.println();

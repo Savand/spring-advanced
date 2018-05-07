@@ -22,6 +22,8 @@
 	<mvc:annotation-driven />
 
 
+	<import resource="security-config.xml"/>
+
 	<bean id="contentNegotiationManager"
 		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 	    <property name="favorPathExtension" value="false" />

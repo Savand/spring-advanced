@@ -1,19 +1,18 @@
 package beans.daos.db;
 
-import beans.daos.AbstractDAO;
-import beans.daos.UserDAO;
-import beans.models.User;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import beans.daos.AbstractDAO;
+import beans.daos.UserDAO;
+import beans.models.Role;
+import beans.models.User;
+
 /**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 4:35 PM
+ * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 20/2/16 Time: 4:35 PM
  */
 @Repository(value = "userDAO")
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
@@ -23,10 +22,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         UserDAO.validateUser(user);
         User byEmail = getByEmail(user.getEmail());
         if (Objects.nonNull(byEmail)) {
-            throw new IllegalStateException(
-                    String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user,
-                                  user.getEmail()));
+            throw new IllegalStateException(String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user, user.getEmail()));
         } else {
+            user.addRole(Role.REGISTERED_USER);
             Long userId = (Long) getCurrentSession().save(user);
             return user.withId(userId);
         }
