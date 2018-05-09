@@ -19,7 +19,7 @@ public class EventController {
 
     // check endpoint http://localhost:8080/spring-course/events
     @RequestMapping("/events")
-    public String getAuditoriums(ModelMap model) {
+    public String getEvents(ModelMap model) {
         List<Event> events = service.getAll();
 
         model.addAttribute("time", LocalTime.now());

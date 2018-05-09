@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +18,7 @@ import beans.models.User;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserDAO userDAO;
 
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         return userDAO.create(user);
     }
-    
+
     @Override
     public void remove(User user) {
         userDAO.delete(user);
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userDAO.getByEmail(email);
     }
-    
+
     @Override
     public List<User> getUsersByName(String name) {
         return userDAO.getAllByName(name);
@@ -49,5 +52,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userDAO.getAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userDAO.getUserDetails(email);
     }
 }

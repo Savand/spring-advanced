@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +57,19 @@ public class BookingController {
 
         List<Ticket> bookedTickets = bookingService.getTickets(getUser(userId));
         model.addAttribute("bookedTickets", bookedTickets);
+        model.addAttribute("time", LocalTime.now());
+
+        return "bookedTickets";
+    }
+
+    // example for test endpoint http://localhost:8080/spring-course/booking/ticketsforevent?eventName=The%20revenant&auditoriumName=Blue%20hall&dateTime=2016-02-05T09:00
+    @RequestMapping("/ticketsforevent")
+    @PreAuthorize("hasAuthority('BOOKING_MANAGER')")
+    public String getTicketsForEvent(@RequestParam String eventName, @RequestParam String auditoriumName,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, ModelMap model) {
+
+        List<Ticket> ticketsForEvent = bookingService.getTicketsForEvent(eventName, auditoriumName, dateTime);
+        model.addAttribute("tickets", ticketsForEvent);
         model.addAttribute("time", LocalTime.now());
 
         return "bookedTickets";

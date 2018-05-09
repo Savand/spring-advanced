@@ -1,15 +1,14 @@
 package beans.daos;
 
-import beans.models.User;
-
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
+import beans.models.User;
+
 /**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/2/2016
- * Time: 11:38 AM
+ * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/2/2016 Time: 11:38 AM
  */
 public interface UserDAO {
 
@@ -24,6 +23,8 @@ public interface UserDAO {
     List<User> getAllByName(String name);
 
     List<User> getAll();
+
+    UserDetails getUserDetails(String email);
 
     static void validateUser(User user) {
         if (Objects.isNull(user)) {

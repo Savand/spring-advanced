@@ -49,7 +49,8 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void poppulateDB() {
-        String email = "dmitriy.vbabichev@gmail.com";
+        // String email = "dmitriy.vbabichev@gmail.com";
+        String email = "d";
         String name = "Dmytro Babichev";
         String eventName = "The revenant";
         String auditoriumName = "Blue hall";
@@ -58,12 +59,12 @@ public class DatabaseInitializer {
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 
-        userService.register(new User(email, name, LocalDate.now(), "password1"));
+        userService.register(new User(email, name, LocalDate.now(), "p"));
         userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), "password2"));
 
         String managerMail = "savand@gmail.com";
         User bookingManager = new User(managerMail, "Andrii Savka", LocalDate.of(1986, 4, 29), "password");
-        bookingManager.addRole(Role.BOOKING_MANAGER);
+        bookingManager.addRole(Role.ROLE_BOOKING_MANAGER);
         userService.register(bookingManager);
         User managerByMail = userService.getUserByEmail(managerMail);
 

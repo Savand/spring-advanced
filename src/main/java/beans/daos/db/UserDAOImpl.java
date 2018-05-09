@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import beans.daos.AbstractDAO;
@@ -24,7 +25,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         if (Objects.nonNull(byEmail)) {
             throw new IllegalStateException(String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user, user.getEmail()));
         } else {
-            user.addRole(Role.REGISTERED_USER);
+            user.addRole(Role.ROLE_REGISTERED_USER);
             Long userId = (Long) getCurrentSession().save(user);
             return user.withId(userId);
         }
@@ -56,5 +57,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     @SuppressWarnings("unchecked")
     public List<User> getAll() {
         return ((List<User>) createBlankCriteria(User.class).list());
+    }
+
+    @Override
+    public UserDetails getUserDetails(String email) {
+        return ((UserDetails) createBlankCriteria(UserDetails.class).add(Restrictions.eq("email", email)).uniqueResult());
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.NestedServletException;
 
 @Controller
 public class ErrorController {
@@ -16,17 +15,14 @@ public class ErrorController {
 
         ModelAndView errorPage = new ModelAndView("errorPage");
         Integer errorStatusCode = (Integer) httpRequest.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        String errorMessage = (String) httpRequest.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-        NestedServletException nestedServletException =
-                (org.springframework.web.util.NestedServletException) httpRequest.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        Exception exc = (Exception) httpRequest.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 
-        if (nestedServletException != null) {
-            errorMessage += nestedServletException.getLocalizedMessage();
-        }
+        String errorMessage = exc == null ? "Oops, smth went wrong" : exc.getMessage();
 
         errorPage.addObject("errorMessage", errorMessage);
         errorPage.addObject("errorStatusCode", errorStatusCode);
 
         return errorPage;
     }
+
 }

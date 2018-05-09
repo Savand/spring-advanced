@@ -9,7 +9,7 @@
 	  		<th>price</th>
 	  	    <th>seats</th>
 	  	</tr>
-	  <#list bookedTickets as ticket>
+	  <#list tickets as ticket>
 	    <tr>
 	    	<td>${ticket.event.name}</td>
 	    	<td>${ticket.dateTime}</td>

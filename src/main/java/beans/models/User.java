@@ -1,15 +1,21 @@
 package beans.models;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 import org.h2.util.StringUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import util.GrantedAuthorityUtil;
 import util.RoleUtil;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/1/2016 Time: 7:35 PM
  */
-public class User {
+public class User implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
 
     private long id;
     private String email;
@@ -128,5 +134,35 @@ public class User {
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", email='" + email + '\'' + ", name='" + name + '\'' + ", birthday=" + birthday + ", roles: " + getRoles() + '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return GrantedAuthorityUtil.getListFromStringRolesRow(roles);
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
