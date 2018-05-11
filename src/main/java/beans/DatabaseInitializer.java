@@ -48,9 +48,9 @@ public class DatabaseInitializer {
 
 
     @PostConstruct
-    public void poppulateDB() {
+    public void populateDB() {
         // String email = "dmitriy.vbabichev@gmail.com";
-        String email = "d";
+        String email = "d@com";
         String name = "Dmytro Babichev";
         String eventName = "The revenant";
         String auditoriumName = "Blue hall";

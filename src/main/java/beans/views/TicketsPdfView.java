@@ -3,6 +3,7 @@ package beans.views;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,7 @@ public class TicketsPdfView extends AbstractPdfView {
 
         @SuppressWarnings("unchecked")
         List<Ticket> tickets = (List<Ticket>) model.get("bookedTickets");
-
+        Objects.requireNonNull(tickets, "'tickets' must not be null");
         PdfPTable table = new PdfPTable(4);
         table.setWidths(new int[] {25, 35, 15, 25});
 

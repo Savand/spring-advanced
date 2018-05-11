@@ -41,23 +41,14 @@
 		</property>
 	</bean>
 
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/WEB-INF/jsp/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
-	</bean>
 
 	<mvc:view-resolvers>
+		<mvc:freemarker suffix=".ftl" />
 		<mvc:content-negotiation>
 			<mvc:default-views>
 				<bean class="beans.views.TicketsPdfView" />
 			</mvc:default-views>
 		</mvc:content-negotiation>
-		<mvc:freemarker suffix=".ftl" />
 	</mvc:view-resolvers>
 
 	<mvc:freemarker-configurer>

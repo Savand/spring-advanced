@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ErrorController {
+
     @RequestMapping(value = "errors", method = RequestMethod.GET)
     public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
 
@@ -19,8 +20,7 @@ public class ErrorController {
 
         String errorMessage = exc == null ? "Oops, smth went wrong" : exc.getMessage();
 
-        errorPage.addObject("errorMessage", errorMessage);
-        errorPage.addObject("errorStatusCode", errorStatusCode);
+        errorPage.addObject("errorMessage", errorMessage).addObject("errorStatusCode", errorStatusCode);
 
         return errorPage;
     }
