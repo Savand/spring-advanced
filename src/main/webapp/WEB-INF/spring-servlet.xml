@@ -24,6 +24,9 @@
 
 	<import resource="security-config.xml" />
 
+
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
 	<bean id="contentNegotiationManager"
 		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="favorPathExtension" value="false" />
@@ -55,5 +58,6 @@
 		<mvc:template-loader-path
 			location="/WEB-INF/freemarker/" />
 	</mvc:freemarker-configurer>
+
 
 </beans>

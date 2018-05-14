@@ -4,35 +4,47 @@
          xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <http security="none" pattern="/resources/**"/>
     <http auto-config="true" use-expressions="true">
-
-
         <intercept-url pattern="/login*" access="permitAll"/>
+        <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="/events" access="permitAll"/>
         <intercept-url pattern="/**"
                        access="hasRole('REGISTERED_USER')"/>
-
+        <csrf disabled="true"/>
 
         <form-login login-page="/login"
                     default-target-url="/welcome"
                     authentication-failure-url="/login?error"
                     username-parameter="email"
                     password-parameter="password"/>
-        <logout logout-success-url="/login?logout"/>
+        <logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/login?logout"/>
+        <!-- enable remember me -->
+        <remember-me
+                token-validity-seconds="10080"
+                remember-me-parameter="remember-me"
+                key="uniqueAndSecret"/>
+
     </http>
 
 
     <authentication-manager>
         <authentication-provider
-                user-service-ref="userServiceImpl">
-            <password-encoder ref="passwordEncoder"/>
+                ref="authProvider">
         </authentication-provider>
     </authentication-manager>
-    <b:bean id="passwordEncoder"
-            class="org.springframework.security.crypto.password.NoOpPasswordEncoder"
-            factory-method="getInstance"/>
+
+    <b:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <b:property name="userDetailsService" ref="userServiceImpl" />
+        <b:property name="passwordEncoder" ref="encoder" />
+    </b:bean>
+
+
+    <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <global-method-security
             pre-post-annotations="enabled"/>
+
+
 
 </b:beans>

@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
+<#include "*/header.ftl">
 
-
-<h2>Users</h3>
+<h2>Users</h2>
 	<#if users?size == 0>
  		There no users in the system
 	<#else>

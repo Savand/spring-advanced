@@ -56,11 +56,13 @@ public class BookingController {
     public String getTicketsForUser(@RequestParam Long userId, ModelMap model) {
 
         List<Ticket> bookedTickets = bookingService.getTickets(getUser(userId));
-        model.addAttribute("bookedTickets", bookedTickets);
+        model.addAttribute("tickets", bookedTickets);
         model.addAttribute("time", LocalTime.now());
 
         return "bookedTickets";
     }
+
+
 
     // example for test endpoint http://localhost:8080/spring-course/booking/ticketsforevent?eventName=The%20revenant&auditoriumName=Blue%20hall&dateTime=2016-02-05T09:00
     @RequestMapping("/ticketsforevent")

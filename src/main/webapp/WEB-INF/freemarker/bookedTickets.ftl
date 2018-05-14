@@ -1,7 +1,9 @@
+<#include "*/header.ftl">
+
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<h2>Booked tickets</h3>
+<h2>Booked tickets</h2>
 	<table border=1>
 		 <tr>
 	  		<th>event</th>
@@ -18,6 +20,11 @@
 	    </tr>
 	  </#list>
 	</table>
+	</br>
+	<#if tickets?size != 0 >
+			<button onclick="window.location='<@spring.url "pdf/ticketsforuser?userId=${userId}" />'">Print tickets to PDF</button> </br>
+	</#if>
+
 	<p><div> Time: ${time} </div>
 </body>
 </html>

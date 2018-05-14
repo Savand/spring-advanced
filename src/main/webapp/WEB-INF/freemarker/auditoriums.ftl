@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<h2>Auditoriums</h3>
+<#include "*/header.ftl">
+
+<h2>Auditoriums</h2>
 	<table border=1>
 		 <tr>
 	  		<th>Name</th>

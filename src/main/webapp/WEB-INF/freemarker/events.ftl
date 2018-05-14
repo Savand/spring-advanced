@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
+<#include "*/header.ftl">
 
 
-<h2>Events</h3>
+<h2>Events</h2>
 	<#if events?size == 0>
  		There no events in the system
 	<#else>

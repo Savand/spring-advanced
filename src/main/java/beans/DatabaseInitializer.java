@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import beans.aspects.CounterAspect;
@@ -35,15 +36,18 @@ public class DatabaseInitializer {
     private EventService eventService;
     private UserService userService;
     private DiscountService discountService;
+    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public DatabaseInitializer(AuditoriumService auditoriumService, BookingService bookingService, EventService eventService, UserService userService,
-            DiscountService discountService) {
+            DiscountService discountService, PasswordEncoder passwordEncoder) {
         this.auditoriumService = auditoriumService;
         this.bookingService = bookingService;
         this.eventService = eventService;
         this.userService = userService;
         this.discountService = discountService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -59,11 +63,14 @@ public class DatabaseInitializer {
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 
-        userService.register(new User(email, name, LocalDate.now(), "p"));
-        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), "password2"));
+        final User admin = new User("admin@ad.com", "admin", LocalDate.of(1986, 4, 29), passwordEncoder.encode("ap"));
+        admin.addRole(Role.ROLE_ADMIN);
+        userService.register(admin);
+        userService.register(new User(email, name, LocalDate.now(), passwordEncoder.encode("p")));
+        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), passwordEncoder.encode("password2")));
 
         String managerMail = "savand@gmail.com";
-        User bookingManager = new User(managerMail, "Andrii Savka", LocalDate.of(1986, 4, 29), "password");
+        User bookingManager = new User(managerMail, "Andrii Savka", LocalDate.of(1986, 4, 29), passwordEncoder.encode("password"));
         bookingManager.addRole(Role.ROLE_BOOKING_MANAGER);
         userService.register(bookingManager);
         User managerByMail = userService.getUserByEmail(managerMail);
