@@ -10,8 +10,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
 import java.util.Properties;
+import javax.sql.DataSource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,7 +48,7 @@ public class DbSessionFactory {
         }});
         localSessionFactoryBean.setMappingResources("/mappings/auditorium.hbm.xml", "/mappings/event.hbm.xml",
                                                     "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml",
-                                                    "/mappings/booking.hbm.xml");
+                                                    "/mappings/booking.hbm.xml", "/mappings/userAccount.hbm.xml");
         return localSessionFactoryBean;
     }
 

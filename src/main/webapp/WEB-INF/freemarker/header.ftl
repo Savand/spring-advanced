@@ -1,6 +1,7 @@
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <#import "/spring.ftl" as spring />
 <@security.authentication property="principal.id" var="userId" scope="page" />
+<@security.authentication property="principal.account.amount" var="accAmount" scope="page" />
 
 
 
@@ -16,9 +17,6 @@
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="<@spring.url "/" />">BOOKING TICKETS</a>
                     </div>
@@ -48,19 +46,30 @@
                                     </li>
                                 </ul>
                             </li>
+
                         </ul>
-<#--                        <form class="navbar-form navbar-left">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>-->
+
                         <ul class="nav navbar-nav navbar-right">
-                            <form action="/logout" method="post">
-                                <button type="submit" class="btn btn-link btn-logout">Logout</button>
-                            </form>
+                            <li class="nav-item"><span style="margin-right: 20px">your account: ${accAmount} $</span></li>
+                            <li style="margin-right: 20px" class="nav-item">
+                                <form action="<@spring.url "/booking/charge-account" />" method="post">
+                                    <div class="form-group">
+                                        <input class="form-control" name="amount" type="text" placeholder="Amount">
+                                        <button type="submit" class="btn btn-primary">Charge</button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form action="/logout" method="post">
+                                    <button type="submit" class="btn btn-lg">Logout</button>
+                                </form>
+                            </li>
+
                         </ul>
+
                     </div>
+
+
                     <!-- /.navbar-collapse -->
                 </div>
                 <!-- /.container-fluid -->

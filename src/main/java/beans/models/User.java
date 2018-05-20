@@ -1,14 +1,13 @@
 package beans.models;
 
-import java.time.LocalDate;
-import java.util.Collection;
-
 import org.h2.util.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import util.GrantedAuthorityUtil;
 import util.RoleUtil;
+
+import java.time.LocalDate;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/1/2016 Time: 7:35 PM
@@ -23,10 +22,23 @@ public class User implements UserDetails {
     private LocalDate birthday;
     private String roles = "";
     private String password;
+    private UserAccount account;
 
-    public User() {}
+    public UserAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(UserAccount account) {
+        this.account = account;
+    }
+
+
+    public User() {
+        this.account = new UserAccount();
+    }
 
     public User(long id, String email, String name, LocalDate birthday) {
+        this();
         this.id = id;
         this.email = email;
         this.name = name;
@@ -105,19 +117,24 @@ public class User implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
 
         User user = (User) o;
 
-        if (id != user.id)
+        if (id != user.id) {
             return false;
-        if (email != null ? !email.equals(user.email) : user.email != null)
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
             return false;
-        if (name != null ? !name.equals(user.name) : user.name != null)
+        }
+        if (name != null ? !name.equals(user.name) : user.name != null) {
             return false;
+        }
         return birthday != null ? birthday.equals(user.birthday) : user.birthday == null;
 
     }

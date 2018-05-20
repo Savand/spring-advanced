@@ -1,22 +1,22 @@
 package beans.controllers;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-
+import beans.models.Ticket;
+import beans.models.User;
+import beans.services.BookingService;
+import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import beans.models.Ticket;
-import beans.models.User;
-import beans.services.BookingService;
-import beans.services.UserService;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 
 @Controller
@@ -40,6 +40,16 @@ public class BookingController {
 
         return "ticketsPrice";
     }
+
+    @RequestMapping("/charge-account")
+    public String chargeAccount(@RequestParam Double amount) {
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        bookingService.chargeAccount(amount, user);
+
+        return "homePage";
+    }
+
 
     // example for test endpoint http://localhost:8080/spring-course/booking/bookticket?userId=1&ticketId=2
     @RequestMapping("/bookticket")

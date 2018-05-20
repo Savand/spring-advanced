@@ -1,18 +1,5 @@
 package beans;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.IntStream;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
 import beans.aspects.CounterAspect;
 import beans.aspects.DiscountAspect;
 import beans.aspects.LuckyWinnerAspect;
@@ -27,10 +14,21 @@ import beans.services.BookingService;
 import beans.services.DiscountService;
 import beans.services.EventService;
 import beans.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+import javax.annotation.PostConstruct;
 
 
 @Component
-public class DatabaseInitializer {
+public class DatabasePopulate {
     private AuditoriumService auditoriumService;
     private BookingService bookingService;
     private EventService eventService;
@@ -40,8 +38,8 @@ public class DatabaseInitializer {
 
 
     @Autowired
-    public DatabaseInitializer(AuditoriumService auditoriumService, BookingService bookingService, EventService eventService, UserService userService,
-            DiscountService discountService, PasswordEncoder passwordEncoder) {
+    public DatabasePopulate(AuditoriumService auditoriumService, BookingService bookingService, EventService eventService, UserService userService,
+                            DiscountService discountService, PasswordEncoder passwordEncoder) {
         this.auditoriumService = auditoriumService;
         this.bookingService = bookingService;
         this.eventService = eventService;
@@ -62,10 +60,12 @@ public class DatabaseInitializer {
         Auditorium yellowHall = auditoriumService.getByName("Yellow hall");
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
-
         final User admin = new User("admin@ad.com", "admin", LocalDate.of(1986, 4, 29), passwordEncoder.encode("ap"));
+
+        bookingService.chargeAccount(20, admin);
         admin.addRole(Role.ROLE_ADMIN);
         userService.register(admin);
+
         userService.register(new User(email, name, LocalDate.now(), passwordEncoder.encode("p")));
         userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), passwordEncoder.encode("password2")));
 

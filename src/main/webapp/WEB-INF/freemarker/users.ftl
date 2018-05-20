@@ -12,6 +12,7 @@
 		  		<th>Birthday</th>
 		  		<th>Roles</th>
 		  		<th>Password</th> <!-- remove -->
+                 <th>Account</th>
 		  	</tr>
 		  <#list users as user>
 		    <tr>
@@ -20,6 +21,7 @@
 		        <td>${user.birthday}</td>
 		        <td>${user.roles}</td>
 		        <td>${user.password}</td> <!-- remove -->
+                <td><#if user.account??>${user.account.amount}<#else>0</#if></td>
 		    </tr>
 		  </#list>
 		</table>
