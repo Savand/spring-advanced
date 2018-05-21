@@ -9,6 +9,7 @@ import beans.models.Rate;
 import beans.models.Role;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.models.UserAccount;
 import beans.services.AuditoriumService;
 import beans.services.BookingService;
 import beans.services.DiscountService;
@@ -60,19 +61,46 @@ public class DatabasePopulate {
         Auditorium yellowHall = auditoriumService.getByName("Yellow hall");
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
+
         final User admin = new User("admin@ad.com", "admin", LocalDate.of(1986, 4, 29), passwordEncoder.encode("ap"));
-
-        bookingService.chargeAccount(20, admin);
+        UserAccount adminAccount = new UserAccount();
+        adminAccount.setUser(admin);
+        admin.setAccount(adminAccount);
         admin.addRole(Role.ROLE_ADMIN);
-        userService.register(admin);
+        User adminWithId = userService.register(admin);
+        User adminById = userService.getById(adminWithId.getUserId());
 
-        userService.register(new User(email, name, LocalDate.now(), passwordEncoder.encode("p")));
-        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), passwordEncoder.encode("password2")));
+        bookingService.chargeAccount(20, adminById);
+
+        final User user1 = new User(email, name, LocalDate.now(), passwordEncoder.encode("p"));
+        UserAccount user1Account = new UserAccount();
+        user1.setAccount(user1Account);
+        user1Account.setUser(user1);
+        User user1Id = userService.register(user1);
+        User user1ById = userService.getById(user1Id.getUserId());
+
+        bookingService.chargeAccount(70, user1ById);
+
+        final User user2 = new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), passwordEncoder.encode("password2"));
+        UserAccount user2Account = new UserAccount();
+        user2Account.setUser(user2);
+        user2.setAccount(user2Account);
+        User user2Id = userService.register(user2);
+        User user2ById = userService.getById(user2Id.getUserId());
+
+        bookingService.chargeAccount(80, user2ById);
 
         String managerMail = "savand@gmail.com";
-        User bookingManager = new User(managerMail, "Andrii Savka", LocalDate.of(1986, 4, 29), passwordEncoder.encode("password"));
+        final User bookingManager = new User(managerMail, "Andrii Savka", LocalDate.of(1986, 4, 29), passwordEncoder.encode("password"));
+        UserAccount managerAccount = new UserAccount();
+        managerAccount.setUser(bookingManager);
+        bookingManager.setAccount(managerAccount);
         bookingManager.addRole(Role.ROLE_BOOKING_MANAGER);
-        userService.register(bookingManager);
+        User user3Id = userService.register(bookingManager);
+        User user3ById = userService.getById(user3Id.getUserId());
+
+        bookingService.chargeAccount(160, user3ById);
+
         User managerByMail = userService.getUserByEmail(managerMail);
 
         System.out.println("User with email: [savand@gmail.com] is " + managerByMail);

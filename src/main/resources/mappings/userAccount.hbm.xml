@@ -13,9 +13,18 @@
 <hibernate-mapping package="beans.models">
 
     <class name="UserAccount" table="ACCOUNTS">
-        <id name="id" column="ID">
-            <generator class="identity"/>
+
+        <id name="userId" type="java.lang.Long">
+            <column name="USER_ID"/>
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
         </id>
+
+        <one-to-one name="user" class="beans.models.User"
+                    constrained="true"/>
+
+
         <property name="amount" type="double">
             <column name="AMOUNT" default="0"/>
         </property>

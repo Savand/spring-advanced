@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class UserAccountDAOImpl extends AbstractDAO implements UserAccountDAO {
 
     @Override public void reset(UserAccount userAccount) {
-        userAccount.setAmount(0);
+        userAccount.setAmount(0.0);
         update(userAccount);
     }
 

@@ -1,16 +1,15 @@
 package beans.daos.db;
 
-import java.util.List;
-import java.util.Objects;
-
-import org.hibernate.criterion.Restrictions;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Repository;
-
 import beans.daos.AbstractDAO;
 import beans.daos.UserDAO;
 import beans.models.Role;
 import beans.models.User;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 20/2/16 Time: 4:35 PM
@@ -62,5 +61,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     @Override
     public UserDetails getUserDetails(String email) {
         return ((UserDetails) createBlankCriteria(UserDetails.class).add(Restrictions.eq("email", email)).uniqueResult());
+    }
+
+    @Override public void update(User user) {
+        getCurrentSession().update(user);
     }
 }

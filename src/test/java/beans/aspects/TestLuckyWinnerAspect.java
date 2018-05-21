@@ -1,5 +1,7 @@
 package beans.aspects;
 
+import static junit.framework.Assert.assertEquals;
+
 import beans.aspects.mocks.LuckyWinnerAspectMock;
 import beans.configuration.AppConfiguration;
 import beans.configuration.db.DataSourceConfiguration;
@@ -24,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -81,7 +81,7 @@ public class TestLuckyWinnerAspect {
     @Test
     public void testCalculateDiscount() {
         User user = (User) applicationContext.getBean("testUser1");
-        User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now());
+        User discountUser = new User(user.getUserId(), user.getEmail(), user.getName(), LocalDate.now());
         Ticket ticket1 = (Ticket) applicationContext.getBean("testTicket1");
         bookingService.bookTicket(discountUser,
                                   new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));

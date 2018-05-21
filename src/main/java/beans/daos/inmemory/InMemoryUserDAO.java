@@ -1,5 +1,11 @@
 package beans.daos.inmemory;
 
+import beans.daos.UserDAO;
+import beans.models.User;
+import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -7,13 +13,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-
-import org.hibernate.cfg.NotYetImplementedException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Repository;
-
-import beans.daos.UserDAO;
-import beans.models.User;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/2/2016 Time: 11:41 AM
@@ -28,14 +27,15 @@ public class InMemoryUserDAO implements UserDAO {
     public User create(User user) {
         UserDAO.validateUser(user);
 
-        if (db.containsKey(user.getId()))
-            throw new IllegalStateException(String.format("Unable to store user: [%s]. User with id: [%s] is already created.", user, user.getId()));
+        if (db.containsKey(user.getUserId())) {
+            throw new IllegalStateException(String.format("Unable to store user: [%s]. User with id: [%s] is already created.", user, user.getUserId()));
+        }
         if (dbEmailIndex.containsKey(user.getEmail()))
             throw new IllegalStateException(String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user, user.getEmail()));
 
-        final User userToStore = user.getId() < 0 ? user.withId(db.size()) : user;
+        final User userToStore = user.getUserId() < 0 ? user.withId(db.size()) : user;
 
-        db.put(userToStore.getId(), userToStore);
+        db.put(userToStore.getUserId(), userToStore);
         dbEmailIndex.put(userToStore.getEmail(), userToStore);
 
         dbNameIndex.putIfAbsent(userToStore.getName(), new HashSet<>());
@@ -47,7 +47,7 @@ public class InMemoryUserDAO implements UserDAO {
     public void delete(User user) {
         UserDAO.validateUser(user);
 
-        db.remove(user.getId());
+        db.remove(user.getUserId());
         dbEmailIndex.remove(user.getEmail());
 
         final Set<User> users = dbNameIndex.get(user.getName());

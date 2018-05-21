@@ -1,7 +1,7 @@
 package beans.services;
 
-import java.util.List;
-
+import beans.daos.UserDAO;
+import beans.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,8 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import beans.daos.UserDAO;
-import beans.models.User;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/1/2016 Time: 7:30 PM
@@ -47,6 +46,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> getUsersByName(String name) {
         return userDAO.getAllByName(name);
+    }
+
+    @Override public void update(User user) {
+        userDAO.update(user);
     }
 
     @Override

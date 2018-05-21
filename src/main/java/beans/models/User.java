@@ -16,7 +16,7 @@ public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private long id;
+    private Long userId;
     private String email;
     private String name;
     private LocalDate birthday;
@@ -34,12 +34,11 @@ public class User implements UserDetails {
 
 
     public User() {
-        this.account = new UserAccount();
     }
 
     public User(long id, String email, String name, LocalDate birthday) {
         this();
-        this.id = id;
+        this.userId = id;
         this.email = email;
         this.name = name;
         this.birthday = birthday;
@@ -58,12 +57,12 @@ public class User implements UserDetails {
         return new User(id, email, name, birthday);
     }
 
-    public long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getEmail() {
@@ -126,7 +125,7 @@ public class User implements UserDetails {
 
         User user = (User) o;
 
-        if (id != user.id) {
+        if (userId != user.userId) {
             return false;
         }
         if (email != null ? !email.equals(user.email) : user.email != null) {
@@ -141,7 +140,7 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (int) (userId ^ (userId >>> 32));
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
@@ -150,7 +149,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", email='" + email + '\'' + ", name='" + name + '\'' + ", birthday=" + birthday + ", roles: " + getRoles() + '}';
+        return "User{" + "id=" + userId + ", email='" + email + '\'' + ", name='" + name + '\'' + ", birthday=" + birthday + ", roles: " + getRoles() + '}';
     }
 
     @Override

@@ -128,7 +128,7 @@ public class BookingServiceImpl implements BookingService {
         if (Objects.isNull(user)) {
             throw new NullPointerException("User is [null]");
         }
-        User foundUser = userService.getById(user.getId());
+        User foundUser = userService.getById(user.getUserId());
         if (Objects.isNull(foundUser)) {
             throw new IllegalStateException("User: [" + user + "] is not registered");
         }
@@ -150,7 +150,8 @@ public class BookingServiceImpl implements BookingService {
     public void chargeAccount(double amount, User user) {
         final UserAccount userAccount = user.getAccount();
         userAccount.chargeAmount(amount);
-        userAccountDAO.update(userAccount);
+        user.setAccount(userAccount);
+        userService.update(user);
     }
 
     @Override

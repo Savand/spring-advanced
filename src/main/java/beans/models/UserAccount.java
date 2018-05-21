@@ -4,33 +4,35 @@ import java.util.Objects;
 
 public class UserAccount {
 
-    private long id;
-    private double amount;
+    private Long userId;
+    private Double amount = 0.0;
+    private User user;
 
-    public UserAccount() {
+    public User getUser() {
+        return user;
     }
 
-    public UserAccount(double amount) {
-        this.amount = amount;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public void chargeAmount(double amount) {
+    public void chargeAmount(Double amount) {
         this.amount += amount;
     }
 

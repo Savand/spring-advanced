@@ -13,7 +13,7 @@
 <hibernate-mapping package="beans.models">
 
     <class name="User" table="USER">
-        <id name="id" column="ID">
+        <id name="userId" column="USER_ID">
             <generator class="identity"/>
         </id>
         <property name="email" column="EMAIL" type="string" unique="true"/>
@@ -21,7 +21,7 @@
         <property name="birthday" type="java.time.LocalDate" column="EVENT_DATE"/>
         <property name="password" type="string" column="PASSWORD" not-null="true"/>
         <property name="roles" type="string" column="ROLES" />
-        <one-to-one name="account" class="beans.models.UserAccount" fetch="join" lazy="false"/>
+        <one-to-one name="account" class="beans.models.UserAccount" cascade="save-update" fetch="join" lazy="false"/>
 
 
     </class>

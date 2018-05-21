@@ -1,7 +1,7 @@
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <#import "/spring.ftl" as spring />
-<@security.authentication property="principal.id" var="userId" scope="page" />
-<@security.authentication property="principal.account.amount" var="accAmount" scope="page" />
+<@security.authentication property="principal.userId" var="userId" scope="page" />
+<@security.authentication property="principal.account.amount" var="accountAmount" scope="page" />
 
 
 
@@ -50,7 +50,7 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="nav-item"><span style="margin-right: 20px">your account: ${accAmount} $</span></li>
+                            <li class="nav-item"><span style="margin-right: 20px">your account: ${accountAmount} $</span></li>
                             <li style="margin-right: 20px" class="nav-item">
                                 <form action="<@spring.url "/booking/charge-account" />" method="post">
                                     <div class="form-group">
