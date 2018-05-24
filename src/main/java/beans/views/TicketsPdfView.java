@@ -1,20 +1,17 @@
 package beans.views;
 
+import beans.models.Ticket;
+import com.lowagie.text.Document;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.web.servlet.view.document.AbstractPdfView;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.view.document.AbstractPdfView;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
-
-import beans.models.Ticket;
 
 public class TicketsPdfView extends AbstractPdfView {
 
@@ -22,13 +19,13 @@ public class TicketsPdfView extends AbstractPdfView {
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+        throws Exception {
 
         @SuppressWarnings("unchecked")
         List<Ticket> tickets = (List<Ticket>) model.get("bookedTickets");
         Objects.requireNonNull(tickets, "'tickets' must not be null");
         PdfPTable table = new PdfPTable(4);
-        table.setWidths(new int[] {25, 35, 15, 25});
+        table.setWidths(new int[]{25, 35, 15, 25});
 
         table.addCell("Event");
         table.addCell("Seats");

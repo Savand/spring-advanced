@@ -1,5 +1,7 @@
 package beans.services.discount;
 
+import static org.junit.Assert.assertEquals;
+
 import beans.daos.mocks.BookingDAODiscountMock;
 import beans.models.User;
 import org.junit.runner.RunWith;
@@ -9,8 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.

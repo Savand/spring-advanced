@@ -33,7 +33,7 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public double getDiscount(User user, Event event) {
         final Double discount = strategies.stream().map(strategy -> strategy.calculateDiscount(user)).reduce(
-                (a, b) -> a + b).orElse(0.0);
+            (a, b) -> a + b).orElse(0.0);
         return Double.compare(discount, MAX_DISCOUNT) > 0 ? MAX_DISCOUNT : discount;
     }
 }

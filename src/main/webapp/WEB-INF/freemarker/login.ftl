@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Login page</title>
-    <link href="<@spring.url '/resources/css/bootstrap.css' />"  rel="stylesheet">
+    <link href="<@spring.url '/resources/css/bootstrap.css' />" rel="stylesheet">
     <link href="<@spring.url '/resources/css/app.css' />" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"/>
 </head>
 
 <body>
@@ -45,7 +45,7 @@
                         <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
                     </div>
 
-                    <#--<c:if test="${empty loginUpdate}">-->
+                <#--<c:if test="${empty loginUpdate}">-->
 
                     <div class="checkbox">
                         <label><input type="checkbox" name="remember-me"> Remember me</label>

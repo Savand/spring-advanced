@@ -16,7 +16,11 @@ public abstract class AbstractDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    protected Session getCurrentSession() {return sessionFactory.getCurrentSession();}
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
-    protected Criteria createBlankCriteria(Class clazz) {return getCurrentSession().createCriteria(clazz);}
+    protected Criteria createBlankCriteria(Class clazz) {
+        return getCurrentSession().createCriteria(clazz);
+    }
 }

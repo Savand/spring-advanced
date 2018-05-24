@@ -1,5 +1,11 @@
 package beans.daos.inmemory;
 
+import beans.daos.BookingDAO;
+import beans.models.Event;
+import beans.models.Ticket;
+import beans.models.User;
+import org.springframework.stereotype.Repository;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,13 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Repository;
-
-import beans.daos.BookingDAO;
-import beans.models.Event;
-import beans.models.Ticket;
-import beans.models.User;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/4/2016 Time: 10:59 AM
@@ -39,8 +38,9 @@ public class InMemoryBookingDAO implements BookingDAO {
         BookingDAO.validateTicket(ticket);
         BookingDAO.validateUser(user);
         final Set<Ticket> tickets = db.get(user.getEmail());
-        if (Objects.nonNull(tickets))
+        if (Objects.nonNull(tickets)) {
             tickets.remove(ticket);
+        }
     }
 
     @Override

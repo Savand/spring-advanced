@@ -1,8 +1,16 @@
 import beans.aspects.CounterAspect;
 import beans.aspects.DiscountAspect;
 import beans.aspects.LuckyWinnerAspect;
-import beans.models.*;
-import beans.services.*;
+import beans.models.Auditorium;
+import beans.models.Event;
+import beans.models.Rate;
+import beans.models.Ticket;
+import beans.models.User;
+import beans.services.AuditoriumService;
+import beans.services.BookingService;
+import beans.services.DiscountService;
+import beans.services.EventService;
+import beans.services.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -48,40 +56,40 @@ public class Main {
         System.out.println();
 
         System.out.println("All users with name: [" + name + "] are: ");
-        userService.getUsersByName(name).forEach(System.out:: println);
+        userService.getUsersByName(name).forEach(System.out::println);
         System.out.println();
 
         Event event1 = eventService.create(
-                new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(9, 0, 0)),
-                          blueHall));
+            new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(9, 0, 0)),
+                      blueHall));
         System.out.println();
         System.out.println("Event by name: " + eventService.getByName(event1.getName()));
         System.out.println();
         eventService.create(new Event(eventName, Rate.HIGH, 60, dateOfEvent, blueHall));
         Event event2 = eventService.create(
-                new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
-                          blueHall));
+            new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
+                      blueHall));
         eventService.create(
-                new Event(eventName, Rate.HIGH, 90, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
-                          redHall));
+            new Event(eventName, Rate.HIGH, 90, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
+                      redHall));
         Event event = new Event(eventName, Rate.HIGH, 150,
                                 LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)), yellowHall);
         event = eventService.create(event);
 
         System.out.println("List of all events:");
-        eventService.getAll().forEach(System.out:: println);
+        eventService.getAll().forEach(System.out::println);
         System.out.println();
 
         System.out.println(
-                "Discount for user: [" + email + "] for event: [" + eventName + "] in auditorium: [" + auditoriumName +
-                "] on date: [" + dateOfEvent + "] is [" +
-                discountService.getDiscount(userByEmail, eventService.getEvent(eventName, blueHall, dateOfEvent))
-                + "]");
+            "Discount for user: [" + email + "] for event: [" + eventName + "] in auditorium: [" + auditoriumName +
+            "] on date: [" + dateOfEvent + "] is [" +
+            discountService.getDiscount(userByEmail, eventService.getEvent(eventName, blueHall, dateOfEvent))
+            + "]");
         System.out.println();
 
         eventService.remove(event2);
         System.out.println("List of all events:");
-        eventService.getAll().forEach(System.out:: println);
+        eventService.getAll().forEach(System.out::println);
         System.out.println();
 
         List<Integer> seats = Arrays.asList(23, 24, 25, 26);
@@ -110,7 +118,7 @@ public class Main {
                                                                          event.getAuditorium().getName(),
                                                                          event.getDateTime());
         IntStream.range(0, ticketsForEvent.size()).forEach(
-                i -> System.out.println("" + i + ") " + ticketsForEvent.get(i)));
+            i -> System.out.println("" + i + ") " + ticketsForEvent.get(i)));
 
         System.out.println();
         eventService.getByName("testName1");

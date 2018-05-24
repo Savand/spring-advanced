@@ -1,5 +1,9 @@
 package beans.services;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import beans.configuration.AppConfiguration;
 import beans.configuration.TestEventServiceConfiguration;
 import beans.configuration.db.DataSourceConfiguration;
@@ -25,10 +29,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,7 +58,7 @@ public class EventServiceImplTest {
     Auditorium auditorium2;
 
     private final Event testEvent = new Event(UUID.randomUUID().toString(), Rate.HIGH, 1321, LocalDateTime.now(),
-                                                     null);
+                                              null);
 
     @Autowired
     @Value("#{testEventDAOMock}")
@@ -130,7 +130,9 @@ public class EventServiceImplTest {
         assertTrue("List of events should match", foundByName.containsAll(expected));
     }
 
-    private Event getEvent(Event eventMock) {return eventService.getEvent(eventMock.getName(), eventMock.getAuditorium(), eventMock.getDateTime());}
+    private Event getEvent(Event eventMock) {
+        return eventService.getEvent(eventMock.getName(), eventMock.getAuditorium(), eventMock.getDateTime());
+    }
 
     @Test
     public void testGetEvent() throws Exception {

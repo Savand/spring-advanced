@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class Ticket {
 
-    private long          id;
-    private Event         event;
+    private long id;
+    private Event event;
     private LocalDateTime dateTime;
-    private String        seats;
-    private User          user;
-    private Double        price;
+    private String seats;
+    private User user;
+    private Double price;
 
     public Ticket() {
     }
@@ -77,7 +77,7 @@ public class Ticket {
     }
 
     public List<Integer> getSeatsList() {
-        return CsvUtil.fromCsvToList(seats, Integer:: valueOf);
+        return CsvUtil.fromCsvToList(seats, Integer::valueOf);
     }
 
     public User getUser() {
@@ -98,21 +98,27 @@ public class Ticket {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Ticket))
+        }
+        if (!(o instanceof Ticket)) {
             return false;
+        }
 
         Ticket ticket = (Ticket) o;
 
-        if (event != null ? !event.equals(ticket.event) : ticket.event != null)
+        if (event != null ? !event.equals(ticket.event) : ticket.event != null) {
             return false;
-        if (dateTime != null ? !dateTime.equals(ticket.dateTime) : ticket.dateTime != null)
+        }
+        if (dateTime != null ? !dateTime.equals(ticket.dateTime) : ticket.dateTime != null) {
             return false;
-        if (seats != null ? !seats.equals(ticket.seats) : ticket.seats != null)
+        }
+        if (seats != null ? !seats.equals(ticket.seats) : ticket.seats != null) {
             return false;
-        if (user != null ? !user.equals(ticket.user) : ticket.user != null)
+        }
+        if (user != null ? !user.equals(ticket.user) : ticket.user != null) {
             return false;
+        }
         return price != null ? price.equals(ticket.price) : ticket.price == null;
 
     }

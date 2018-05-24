@@ -46,7 +46,7 @@ public class LuckyWinnerAspect {
         if (randomInt == 0) {
             Ticket luckyTicket = new Ticket(ticket.getEvent(), ticket.getDateTime(), ticket.getSeatsList(), ticket.getUser(), 0.0);
             luckyUsers.add(user.getEmail());
-            joinPoint.proceed(new Object[] {user, luckyTicket});
+            joinPoint.proceed(new Object[]{user, luckyTicket});
         } else {
             joinPoint.proceed();
         }

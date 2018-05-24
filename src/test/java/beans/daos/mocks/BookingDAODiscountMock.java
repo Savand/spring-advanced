@@ -17,7 +17,7 @@ import java.util.Objects;
 public class BookingDAODiscountMock implements BookingDAO {
 
     public final String userThatBookedTickets;
-    public final int    ticketsBought;
+    public final int ticketsBought;
 
     public BookingDAODiscountMock(String userThatBookedTickets, int ticketsBought) {
         this.userThatBookedTickets = userThatBookedTickets;

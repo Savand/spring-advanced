@@ -13,6 +13,7 @@ import java.util.HashMap;
  * Time: 8:38 PM
  */
 public class DiscountAspectMock extends DiscountAspect {
+
     public static void cleanup() {
         discountPerUserCounter.put(BirthdayStrategy.class.getSimpleName(), new HashMap<>());
         discountPerUserCounter.put(TicketsStrategy.class.getSimpleName(), new HashMap<>());

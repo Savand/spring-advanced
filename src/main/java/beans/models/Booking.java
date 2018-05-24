@@ -8,8 +8,8 @@ package beans.models;
  */
 public class Booking {
 
-    private long   id;
-    private User   user;
+    private long id;
+    private User user;
     private Ticket ticket;
 
     public Booking() {
@@ -55,17 +55,21 @@ public class Booking {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Booking))
+        }
+        if (!(o instanceof Booking)) {
             return false;
+        }
 
         Booking booking = (Booking) o;
 
-        if (id != booking.id)
+        if (id != booking.id) {
             return false;
-        if (user != null ? !user.equals(booking.user) : booking.user != null)
+        }
+        if (user != null ? !user.equals(booking.user) : booking.user != null) {
             return false;
+        }
         return ticket != null ? ticket.equals(booking.ticket) : booking.ticket == null;
 
     }

@@ -30,8 +30,9 @@ public class InMemoryUserDAO implements UserDAO {
         if (db.containsKey(user.getUserId())) {
             throw new IllegalStateException(String.format("Unable to store user: [%s]. User with id: [%s] is already created.", user, user.getUserId()));
         }
-        if (dbEmailIndex.containsKey(user.getEmail()))
+        if (dbEmailIndex.containsKey(user.getEmail())) {
             throw new IllegalStateException(String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user, user.getEmail()));
+        }
 
         final User userToStore = user.getUserId() < 0 ? user.withId(db.size()) : user;
 
@@ -51,8 +52,9 @@ public class InMemoryUserDAO implements UserDAO {
         dbEmailIndex.remove(user.getEmail());
 
         final Set<User> users = dbNameIndex.get(user.getName());
-        if (Objects.nonNull(users))
+        if (Objects.nonNull(users)) {
             users.remove(user);
+        }
     }
 
 

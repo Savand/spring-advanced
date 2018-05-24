@@ -1,11 +1,11 @@
 package util;
 
+import beans.models.Role;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import beans.models.Role;
 
 public class RoleUtil {
 

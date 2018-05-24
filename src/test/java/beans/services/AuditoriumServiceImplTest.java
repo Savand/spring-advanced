@@ -1,5 +1,7 @@
 package beans.services;
 
+import static junit.framework.Assert.assertEquals;
+
 import beans.configuration.AppConfiguration;
 import beans.configuration.db.DataSourceConfiguration;
 import beans.configuration.db.DbSessionFactory;
@@ -17,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Dmytro_Babichev
@@ -26,15 +26,16 @@ import static junit.framework.Assert.assertEquals;
  * Time: 1:23 PM
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class, beans.configuration.TestAuditoriumConfiguration.class})
+@ContextConfiguration(classes = {AppConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
+                                 beans.configuration.TestAuditoriumConfiguration.class})
 @Transactional
 public class AuditoriumServiceImplTest {
 
     public static final int AUDITORIUMS_COUNT = 2;
     @Autowired
-    private AuditoriumService   auditoriumService;
+    private AuditoriumService auditoriumService;
     @Autowired
-    private ApplicationContext  applicationContext;
+    private ApplicationContext applicationContext;
     @Autowired
     private DBAuditoriumDAOMock auditoriumDAOMock;
 

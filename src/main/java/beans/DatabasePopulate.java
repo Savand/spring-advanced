@@ -30,6 +30,7 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class DatabasePopulate {
+
     private AuditoriumService auditoriumService;
     private BookingService bookingService;
     private EventService eventService;
@@ -70,7 +71,7 @@ public class DatabasePopulate {
         User adminWithId = userService.register(admin);
         User adminById = userService.getById(adminWithId.getUserId());
 
-        bookingService.chargeAccount(20, adminById);
+        bookingService.chargeAccount(2000, adminById);
 
         final User user1 = new User(email, name, LocalDate.now(), passwordEncoder.encode("p"));
         UserAccount user1Account = new UserAccount();
@@ -79,7 +80,7 @@ public class DatabasePopulate {
         User user1Id = userService.register(user1);
         User user1ById = userService.getById(user1Id.getUserId());
 
-        bookingService.chargeAccount(70, user1ById);
+        bookingService.chargeAccount(1400, user1ById);
 
         final User user2 = new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), passwordEncoder.encode("password2"));
         UserAccount user2Account = new UserAccount();
@@ -99,7 +100,7 @@ public class DatabasePopulate {
         User user3Id = userService.register(bookingManager);
         User user3ById = userService.getById(user3Id.getUserId());
 
-        bookingService.chargeAccount(160, user3ById);
+        bookingService.chargeAccount(1600, user3ById);
 
         User managerByMail = userService.getUserByEmail(managerMail);
 
@@ -113,7 +114,6 @@ public class DatabasePopulate {
         System.out.println("All users with name: [" + name + "] are: ");
         userService.getUsersByName(name).forEach(System.out::println);
         System.out.println();
-
 
         Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(9, 0, 0)), blueHall));
         System.out.println();
@@ -130,7 +130,7 @@ public class DatabasePopulate {
         System.out.println();
 
         System.out.println("Discount for user: [" + email + "] for event: [" + eventName + "] in auditorium: [" + auditoriumName + "] on date: [" + dateOfEvent
-                + "] is [" + discountService.getDiscount(userByEmail, eventService.getEvent(eventName, blueHall, dateOfEvent)) + "]");
+                           + "] is [" + discountService.getDiscount(userByEmail, eventService.getEvent(eventName, blueHall, dateOfEvent)) + "]");
         System.out.println();
 
         eventService.remove(event2);
@@ -145,10 +145,13 @@ public class DatabasePopulate {
         List<Integer> seats2 = Arrays.asList(27, 28, 29, 30);
         List<Integer> seats3 = Arrays.asList(2, 8, 9, 3);
         bookingService.bookTicket(userByEmail, new Ticket(event, LocalDateTime.now(), seats, userByEmail, ticketPrice));
-        bookingService.bookTicket(userByEmail, new Ticket(event, LocalDateTime.now(), seats2, userByEmail,
-                bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats2, userByEmail)));
-        bookingService.bookTicket(userByEmail, new Ticket(event, LocalDateTime.now(), seats3, userByEmail,
-                bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats3, userByEmail)));
+        bookingService.bookTicket(bookingManager, new Ticket(event, LocalDateTime.now(), seats2, userByEmail,
+                                                             bookingService
+                                                                 .getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats2,
+                                                                                 userByEmail)));
+        bookingService.bookTicket(admin, new Ticket(event, LocalDateTime.now(), seats3, userByEmail,
+                                                    bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats3,
+                                                                                  userByEmail)));
 
         System.out.println();
         System.out.println("Tickets booked for event: [" + event + "]");

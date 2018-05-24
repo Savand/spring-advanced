@@ -34,8 +34,8 @@ public class InMemoryAuditoriumDAO implements AuditoriumDAO {
     @Override
     public Auditorium getByName(String auditoriumName) {
         return db.stream().filter(auditorium -> Objects.equals(auditorium.getName(), auditoriumName)).findFirst()
-                 .orElseThrow(() -> new IllegalArgumentException(
-                         "Auditorium with name: [" + auditoriumName + "] does not exist"));
+            .orElseThrow(() -> new IllegalArgumentException(
+                "Auditorium with name: [" + auditoriumName + "] does not exist"));
     }
 
     @Override

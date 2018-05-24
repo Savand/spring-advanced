@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
  */
 public class Event {
 
-    private long          id;
-    private String        name;
-    private Rate          rate;
-    private double        basePrice;
+    private long id;
+    private String name;
+    private Rate rate;
+    private double basePrice;
     private LocalDateTime dateTime;
-    private Auditorium    auditorium;
+    private Auditorium auditorium;
 
     public Event() {
     }
@@ -87,23 +87,30 @@ public class Event {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Event))
+        }
+        if (!(o instanceof Event)) {
             return false;
+        }
 
         Event event = (Event) o;
 
-        if (id != event.id)
+        if (id != event.id) {
             return false;
-        if (Double.compare(event.basePrice, basePrice) != 0)
+        }
+        if (Double.compare(event.basePrice, basePrice) != 0) {
             return false;
-        if (name != null ? !name.equals(event.name) : event.name != null)
+        }
+        if (name != null ? !name.equals(event.name) : event.name != null) {
             return false;
-        if (rate != event.rate)
+        }
+        if (rate != event.rate) {
             return false;
-        if (dateTime != null ? !dateTime.equals(event.dateTime) : event.dateTime != null)
+        }
+        if (dateTime != null ? !dateTime.equals(event.dateTime) : event.dateTime != null) {
             return false;
+        }
         return auditorium != null ? auditorium.equals(event.auditorium) : event.auditorium == null;
 
     }

@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @Component
 public class CounterAspect {
 
-    protected static final Map<String, Integer> accessByNameCounter   = new HashMap<>();
+    protected static final Map<String, Integer> accessByNameCounter = new HashMap<>();
     protected static final Map<String, Integer> getPriceByNameCounter = new HashMap<>();
-    protected static final Map<String, Integer> bookByNameCounter     = new HashMap<>();
+    protected static final Map<String, Integer> bookByNameCounter = new HashMap<>();
 
     @Pointcut("(execution(* beans.services.EventService.getEvent(String, ..)) && args(eventName, ..)) || "
               + "execution(* beans.services.EventService.getByName(String)) && args(eventName))")
@@ -66,7 +66,7 @@ public class CounterAspect {
     }
 
     private static <K, V> Map<K, V> copyMap(Map<K, V> src) {
-        return src.entrySet().stream().collect(Collectors.toMap(Map.Entry:: getKey, Map.Entry:: getValue));
+        return src.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private <K> void increaseCounter(Map<K, Integer> stat, K key) {

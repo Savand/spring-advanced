@@ -1,15 +1,14 @@
 package beans.controllers;
 
-import java.time.LocalTime;
-import java.util.List;
-
+import beans.models.Event;
+import beans.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import beans.models.Event;
-import beans.services.EventService;
+import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 public class EventController {

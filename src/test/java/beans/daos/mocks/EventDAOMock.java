@@ -21,12 +21,12 @@ public class EventDAOMock extends EventDAOImpl {
 
     public void init() {
         cleanup();
-        events.forEach(this :: create);
+        events.forEach(this::create);
     }
 
     public void cleanup() {
         System.out.println("deleting ");
         System.out.println(getAll());
-        getAll().forEach(this :: delete);
+        getAll().forEach(this::delete);
     }
 }

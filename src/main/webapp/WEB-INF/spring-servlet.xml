@@ -1,63 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc.xsd
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/aop 
-   						   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+   						   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						   http://www.springframework.org/schema/tx
+						   http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<context:component-scan base-package="beans" />
+    <context:component-scan base-package="beans"/>
 
-	<aop:aspectj-autoproxy />
+    <aop:aspectj-autoproxy/>
 
-	<context:annotation-config />
+    <context:annotation-config/>
 
-	<mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
+    <tx:annotation-driven/>
 
-	<import resource="security-config.xml" />
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
-
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-
-	<bean id="contentNegotiationManager"
-		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<property name="favorPathExtension" value="false" />
-		<property name="favorParameter" value="true" />
-		<property name="parameterName" value="mediaType" />
-		<property name="ignoreAcceptHeader" value="true" />
-		<property name="useJaf" value="false" />
-		<property name="defaultContentType" value="application/json" />
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="application/xml" />
-				<entry key="pdf" value="application/pdf" />
-			</map>
-		</property>
-	</bean>
+    <import resource="security-config.xml"/>
 
 
-	<mvc:view-resolvers>
-		<mvc:freemarker suffix=".ftl" />
-		<mvc:content-negotiation>
-			<mvc:default-views>
-				<bean class="beans.views.TicketsPdfView" />
-			</mvc:default-views>
-		</mvc:content-negotiation>
-	</mvc:view-resolvers>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
-	<mvc:freemarker-configurer>
-		<mvc:template-loader-path
-			location="/WEB-INF/freemarker/" />
-	</mvc:freemarker-configurer>
+    <bean id="contentNegotiationManager"
+          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false"/>
+        <property name="favorParameter" value="true"/>
+        <property name="parameterName" value="mediaType"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="useJaf" value="false"/>
+        <property name="defaultContentType" value="application/json"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+                <entry key="xml" value="application/xml"/>
+                <entry key="pdf" value="application/pdf"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <mvc:view-resolvers>
+        <mvc:freemarker suffix=".ftl"/>
+        <mvc:content-negotiation>
+            <mvc:default-views>
+                <bean class="beans.views.TicketsPdfView"/>
+            </mvc:default-views>
+        </mvc:content-negotiation>
+    </mvc:view-resolvers>
+
+    <mvc:freemarker-configurer>
+        <mvc:template-loader-path
+                location="/WEB-INF/freemarker/"/>
+    </mvc:freemarker-configurer>
 
 
 </beans>

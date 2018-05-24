@@ -6,7 +6,13 @@ import beans.models.Event;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,10 +41,11 @@ public class InMemoryEventDAO implements EventDAO {
                                                                                       event.getName()))) {
             delete(new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(), null, null));
             return create(event);
-        } else
+        } else {
             throw new IllegalStateException(String.format(
-                    "Unable to assign auditorium: [%s] for event: [%s] on date: [%s]. Auditorium is assigned for other events: [%s]",
-                    event.getAuditorium(), event.getName(), event.getDateTime(), assignedEvents));
+                "Unable to assign auditorium: [%s] for event: [%s] on date: [%s]. Auditorium is assigned for other events: [%s]",
+                event.getAuditorium(), event.getName(), event.getDateTime(), assignedEvents));
+        }
     }
 
     @Override
@@ -55,8 +62,8 @@ public class InMemoryEventDAO implements EventDAO {
         final List<Event> events = db.get(event.getName());
         if (Objects.nonNull(events)) {
             final List<Event> toRemove = events.stream().filter(foundEvent -> foundEvent.getId() == event.getId()).collect(
-                    Collectors.toList());
-            toRemove.forEach(events:: remove);
+                Collectors.toList());
+            toRemove.forEach(events::remove);
             if (events.isEmpty()) {
                 db.remove(event.getName());
             }
@@ -79,7 +86,7 @@ public class InMemoryEventDAO implements EventDAO {
         return getByName(name).stream().filter(event -> event.getDateTime().getYear() == date.getYear() &&
                                                         event.getDateTime().getMonth() == date.getMonth() &&
                                                         event.getDateTime().getDayOfMonth() == date.getDayOfMonth()).collect(
-                Collectors.toList());
+            Collectors.toList());
     }
 
     @Override
@@ -90,7 +97,7 @@ public class InMemoryEventDAO implements EventDAO {
     @Override
     public List<Event> getForDateRange(LocalDateTime from, LocalDateTime to) {
         return getEventStream().filter(event -> event.getDateTime().isAfter(from) && event.getDateTime().isBefore(to)).collect(
-                Collectors.toList());
+            Collectors.toList());
     }
 
     @Override
@@ -113,14 +120,15 @@ public class InMemoryEventDAO implements EventDAO {
             db.putIfAbsent(event.getName(), new ArrayList<>());
             db.get(event.getName()).add(event);
             return event;
-        } else
+        } else {
             throw new IllegalStateException(String.format(
-                    "Unable to assign auditorium: [%s] for event: [%s] on date: [%s]. Auditorium is assigned for other events: [%s]",
-                    event.getAuditorium(), event.getName(), event.getDateTime(), assignedEvents));
+                "Unable to assign auditorium: [%s] for event: [%s] on date: [%s]. Auditorium is assigned for other events: [%s]",
+                event.getAuditorium(), event.getName(), event.getDateTime(), assignedEvents));
+        }
     }
 
     private Stream<Event> getEventStream() {
-        return db.values().stream().flatMap(Collection:: stream);
+        return db.values().stream().flatMap(Collection::stream);
     }
 
     private Stream<Event> filterByAuditorium(Stream<Event> eventStream, Auditorium auditorium) {
@@ -128,12 +136,12 @@ public class InMemoryEventDAO implements EventDAO {
     }
 
     private Stream<Event> filterByDateTime(Stream<Event> eventStream, LocalDateTime dateTime) {
-        return filterBy(eventStream, Event:: getDateTime, dateTime);
+        return filterBy(eventStream, Event::getDateTime, dateTime);
     }
 
     private <T> Stream<Event> filterBy(Stream<Event> eventStream, Function<Event, T> valueExtractor, T compareValue) {
         return Objects.isNull(compareValue) ? eventStream : eventStream.filter(
-                event -> Objects.nonNull(valueExtractor.apply(event))).filter(
-                event -> Objects.equals(valueExtractor.apply(event), compareValue));
+            event -> Objects.nonNull(valueExtractor.apply(event))).filter(
+            event -> Objects.equals(valueExtractor.apply(event), compareValue));
     }
 }

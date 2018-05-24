@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class Auditorium {
 
-    private long   id;
+    private long id;
     private String name;
-    private int    seatsNumber;
+    private int seatsNumber;
     private String vipSeats;
 
     public Auditorium() {
@@ -68,7 +68,7 @@ public class Auditorium {
     }
 
     public List<Integer> getVipSeatsList() {
-        return CsvUtil.fromCsvToList(vipSeats, Integer:: valueOf);
+        return CsvUtil.fromCsvToList(vipSeats, Integer::valueOf);
     }
 
     public void setVipSeatsList(List<Integer> vipSeats) {
@@ -81,19 +81,24 @@ public class Auditorium {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Auditorium))
+        }
+        if (!(o instanceof Auditorium)) {
             return false;
+        }
 
         Auditorium that = (Auditorium) o;
 
-        if (id != that.id)
+        if (id != that.id) {
             return false;
-        if (seatsNumber != that.seatsNumber)
+        }
+        if (seatsNumber != that.seatsNumber) {
             return false;
-        if (name != null ? !name.equals(that.name) : that.name != null)
+        }
+        if (name != null ? !name.equals(that.name) : that.name != null) {
             return false;
+        }
         return vipSeats != null ? vipSeats.equals(that.vipSeats) : that.vipSeats == null;
 
     }

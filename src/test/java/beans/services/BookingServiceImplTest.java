@@ -1,5 +1,8 @@
 package beans.services;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import beans.configuration.AppConfiguration;
 import beans.configuration.TestBookingServiceConfiguration;
 import beans.configuration.db.DataSourceConfiguration;
@@ -31,9 +34,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Dmytro_Babichev
@@ -56,11 +56,11 @@ public class BookingServiceImplTest {
     @Autowired
     private BookingDAOBookingMock bookingDAOBookingMock;
     @Autowired
-    private EventDAOMock          eventDAOMock;
+    private EventDAOMock eventDAOMock;
     @Autowired
-    private UserDAOMock           userDAOMock;
+    private UserDAOMock userDAOMock;
     @Autowired
-    private DBAuditoriumDAOMock   auditoriumDAOMock;
+    private DBAuditoriumDAOMock auditoriumDAOMock;
 
     @Before
     public void init() {

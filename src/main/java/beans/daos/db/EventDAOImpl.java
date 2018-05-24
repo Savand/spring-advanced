@@ -28,8 +28,8 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
         List<Event> byAuditoriumAndDate = getByAuditoriumAndDate(event.getAuditorium(), event.getDateTime());
         if (byAuditoriumAndDate.size() > 0) {
             throw new IllegalStateException(String.format(
-                    "Unable to store event: [%s]. Event with such auditorium: [%s] on date: [%s] is already created.",
-                    event, event.getAuditorium(), event.getDateTime()));
+                "Unable to store event: [%s]. Event with such auditorium: [%s] on date: [%s] is already created.",
+                event, event.getAuditorium(), event.getDateTime()));
         } else {
             Long eventId = (Long) getCurrentSession().save(event);
             return event.withId(eventId);
@@ -46,7 +46,7 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
         LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),
                                                          Restrictions.eq("name", eventName));
         return ((Event) createBlankCriteria(Event.class).add(nameAndDate).createAlias("auditorium", "aud").add(
-                Restrictions.eq("aud.id", auditorium.getId())).uniqueResult());
+            Restrictions.eq("aud.id", auditorium.getId())).uniqueResult());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
     @SuppressWarnings("unchecked")
     public List<Event> getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime date) {
         Query query = getCurrentSession().createQuery(
-                "from Event e where e.auditorium = :auditorium and e.dateTime = :dateTime");
+            "from Event e where e.auditorium = :auditorium and e.dateTime = :dateTime");
         query.setParameter("auditorium", auditorium);
         query.setParameter("dateTime", date);
         return ((List<Event>) query.list());

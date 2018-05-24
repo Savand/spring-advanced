@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -88,7 +89,6 @@ public class BookingServiceImpl implements BookingService {
         final double vipSeatPrice = vipSeatPriceMultiplier * seatPrice;
         final double discount = discountService.getDiscount(user, event);
 
-
         validateSeats(seats, auditorium);
 
         final List<Integer> auditoriumVipSeats = auditorium.getVipSeatsList();
@@ -119,11 +119,12 @@ public class BookingServiceImpl implements BookingService {
         final Optional<Integer> incorrectSeat = seats.stream().filter(seat -> seat < minSeatNumber || seat > seatsNumber).findFirst();
         incorrectSeat.ifPresent(seat -> {
             throw new IllegalArgumentException(
-                    String.format("Seat: [%s] is incorrect. Auditorium: [%s] has [%s] seats", seat, auditorium.getName(), seatsNumber));
+                String.format("Seat: [%s] is incorrect. Auditorium: [%s] has [%s] seats", seat, auditorium.getName(), seatsNumber));
         });
     }
 
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Ticket bookTicket(User user, Ticket ticket) {
         if (Objects.isNull(user)) {
             throw new NullPointerException("User is [null]");
@@ -135,13 +136,25 @@ public class BookingServiceImpl implements BookingService {
 
         List<Ticket> bookedTickets = bookingDAO.getTickets(ticket.getEvent());
         boolean seatsAreAlreadyBooked = bookedTickets.stream()
-                .filter(bookedTicket -> ticket.getSeatsList().stream().filter(bookedTicket.getSeatsList()::contains).findAny().isPresent()).findAny()
-                .isPresent();
+            .filter(bookedTicket -> ticket.getSeatsList().stream().filter(bookedTicket.getSeatsList()::contains).findAny().isPresent()).findAny()
+            .isPresent();
 
-        if (!seatsAreAlreadyBooked)
+        if (!seatsAreAlreadyBooked) {
+            Double price = ticket.getPrice();
+            UserAccount account = foundUser.getAccount();
+            Double accAmount = account.getAmount();
+
+            if (price > accAmount) {
+                throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Not enough funds on " + user.getEmail() + "'s account (" + accAmount
+                                                + "). Please charge user's account and try again");
+            }
+
+            account.setAmount(accAmount - price);
+            userAccountDAO.update(account);
             bookingDAO.create(user, ticket);
-        else
+        } else {
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+        }
 
         return ticket;
     }

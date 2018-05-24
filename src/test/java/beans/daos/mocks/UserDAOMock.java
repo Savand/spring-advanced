@@ -21,10 +21,10 @@ public class UserDAOMock extends UserDAOImpl {
 
     public void init() {
         cleanup();
-        users.forEach(this :: create);
+        users.forEach(this::create);
     }
 
     public void cleanup() {
-        getAll().forEach(this :: delete);
+        getAll().forEach(this::delete);
     }
 }

@@ -1,5 +1,7 @@
 package beans.aspects;
 
+import static junit.framework.Assert.assertEquals;
+
 import beans.aspects.mocks.CountAspectMock;
 import beans.configuration.AppConfiguration;
 import beans.configuration.db.DataSourceConfiguration;
@@ -26,8 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -60,7 +60,7 @@ public class TestCounterAspect {
     private UserDAOMock userDAOMock;
 
     @Autowired
-    private CounterAspect       counterAspect;
+    private CounterAspect counterAspect;
 
     @Autowired
     private DBAuditoriumDAOMock auditoriumDAOMock;
