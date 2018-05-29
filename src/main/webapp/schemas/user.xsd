@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://com/ws/userservice" version="1.0"
+           targetNamespace="http://www.user.ws.gen" elementFormDefault="qualified">
+
+    <xs:element name="GetUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="userId" type="xs:long"/>
+                <xs:element minOccurs="0" name="email" type="xs:string"/>
+                <xs:element minOccurs="0" name="name" type="xs:string"/>
+                <xs:element minOccurs="0" name="roles" type="xs:string"/>
+                <xs:element minOccurs="0" name="password" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

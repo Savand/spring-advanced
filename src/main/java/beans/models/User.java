@@ -8,10 +8,17 @@ import util.RoleUtil;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Created with IntelliJ IDEA. User: Dmytro_Babichev Date: 2/1/2016 Time: 7:35 PM
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(propOrder = {"userId", "email", "name", "birthday", "roles" })
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -19,9 +26,14 @@ public class User implements UserDetails {
     private Long userId;
     private String email;
     private String name;
+
+    @XmlTransient
     private LocalDate birthday;
+
     private String roles = "";
     private String password;
+
+    @XmlTransient
     private UserAccount account;
 
     public UserAccount getAccount() {

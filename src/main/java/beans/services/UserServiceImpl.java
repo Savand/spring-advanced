@@ -19,6 +19,7 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
+    
     private final UserDAO userDAO;
 
     @Autowired
