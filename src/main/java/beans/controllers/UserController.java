@@ -1,15 +1,16 @@
 package beans.controllers;
 
-import beans.models.User;
-import beans.services.UserService;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalTime;
-import java.util.List;
+import beans.models.User;
+import beans.services.UserService;
 
 @Controller
 public class UserController {
@@ -17,7 +18,6 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    // check endpoint http://localhost:8080/spring-course/users
     @RequestMapping("/users")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String getUsers(ModelMap model) {

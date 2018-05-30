@@ -1,9 +1,9 @@
 package beans.controllers;
 
-import beans.models.Ticket;
-import beans.models.User;
-import beans.services.BookingService;
-import beans.services.UserService;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
+import beans.models.Ticket;
+import beans.models.User;
+import beans.services.BookingService;
+import beans.services.UserService;
 
 
 @Controller
@@ -33,8 +34,8 @@ public class BookingController {
     // example for test endpoint http://localhost:8080/spring-course/booking/ticketsprice?event=The%20revenant&auditorium=Yellow%20hall&dateTime=2016-02-05T21:18&seats=1&seats=2&userId=1
     @RequestMapping("/ticketsprice")
     public String getTicketPrice(@RequestParam String event, @RequestParam String auditorium,
-                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, @RequestParam List<Integer> seats,
-                                 @RequestParam long userId, ModelMap model) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, @RequestParam List<Integer> seats,
+            @RequestParam long userId, ModelMap model) {
 
         double ticketPrice = bookingService.getTicketPrice(event, auditorium, dateTime, seats, getUser(userId));
         model.addAttribute("ticketsPrice", ticketPrice);
@@ -78,7 +79,7 @@ public class BookingController {
     @RequestMapping("/ticketsforevent")
     @PreAuthorize("hasAuthority('BOOKING_MANAGER')")
     public String getTicketsForEvent(@RequestParam String eventName, @RequestParam String auditoriumName,
-                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, ModelMap model) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, ModelMap model) {
 
         List<Ticket> ticketsForEvent = bookingService.getTicketsForEvent(eventName, auditoriumName, dateTime);
         model.addAttribute("tickets", ticketsForEvent);
@@ -87,7 +88,6 @@ public class BookingController {
         return "bookedTickets";
     }
 
-    // example for test endpoint http://localhost:8080/spring-course/booking/pdf/ticketsforuser?userId=1
     @RequestMapping(value = "/pdf/ticketsforuser", produces = "application/pdf")
     public ModelAndView downloadPdfTicketsForUser(@RequestParam Long userId) {
 

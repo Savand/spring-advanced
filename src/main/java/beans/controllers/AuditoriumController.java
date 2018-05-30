@@ -1,14 +1,15 @@
 package beans.controllers;
 
-import beans.models.Auditorium;
-import beans.services.AuditoriumService;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalTime;
-import java.util.List;
+import beans.models.Auditorium;
+import beans.services.AuditoriumService;
 
 @Controller
 public class AuditoriumController {
@@ -16,7 +17,6 @@ public class AuditoriumController {
     @Autowired
     private AuditoriumService service;
 
-    // check endpoint http://localhost:8080/spring-course/auditoriums
     @RequestMapping("/auditoriums")
     public String getAuditoriums(ModelMap model) {
 

@@ -1,20 +1,23 @@
 package beans.controllers.ws;
 
-import beans.models.User;
-import beans.services.UserService;
-import gen.ws.user.GetUserRequest;
-import gen.ws.user.GetUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import beans.controllers.ws.gen.user.GetUserRequest;
+import beans.controllers.ws.gen.user.GetUserResponse;
+import beans.models.User;
+import beans.services.UserService;
+
+
+
 @Endpoint
 public class UserEndpoint {
 
 
-    private static final String NAMESPACE_URI = "http://com/ws/userservice";
+    private static final String NAMESPACE_URI = "http://www.user.gen.ws.controllers.beans";
     private final UserService service;
 
     @Autowired
@@ -22,7 +25,7 @@ public class UserEndpoint {
         this.service = service;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserById")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
     @ResponsePayload
     public GetUserResponse getUserById(@RequestPayload GetUserRequest request) {
         User user = service.getById(request.getId());
@@ -33,8 +36,10 @@ public class UserEndpoint {
     }
 
     private void map(User user, GetUserResponse getUserResponse) {
-        getUserResponse.setName(user.getName());
-        getUserResponse.setEmail(user.getEmail());
+        beans.controllers.ws.gen.user.User genUser = new beans.controllers.ws.gen.user.User();
+        genUser.setName(user.getName());
+        genUser.setEmail(user.getEmail());
+        getUserResponse.setUser(genUser);
     }
 
 }
